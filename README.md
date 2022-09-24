@@ -8,7 +8,7 @@ This modifies the [Highcharts Column Chart](https://github.com/teochewthunder/hs
 ## Requirements
 - Added include link to the heatmap library.
 - The data used in the chart is an array of arrays. Each sub-array has:
- - `x`: the season name
- - `y`: the player name
- - `val`: the statistic
+    - `x`: the season name
+    - `y`: the player name
+    - `val`: the statistic
 - Function renaming and text changes.
