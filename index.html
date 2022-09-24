@@ -73,7 +73,6 @@
 		    {
 		    	var stat = document.getElementById("ddlStat").value;
 
-		    	var max = 0;
 		    	var players = [];
 		    	var seasons = Object.keys(data);
 
@@ -86,11 +85,11 @@
 		    	}
 
 		    	var heatmap_values = [];
+
 		    	for(let i = 0; i < seasons.length; i++)
 		    	{
 		    		for(let j = 0; j < players.length; j++)
 		    		{
-		    			var value;
 		    			var index = data[seasons[i]].categories.indexOf(players[j]);
 
 		    			if (index == -1)
@@ -103,8 +102,6 @@
 		    			}
 		    		}
 		    	}
-
-		    	console.log(heatmap_values)
 
 		        const chart = Highcharts.chart("container", {
 		            chart: 
@@ -122,7 +119,7 @@
 		            subtitle: 
 		            {
 		                text: "Football statistics by TeochewThunder",
-		                style: { "color": "rgba(200, 0, 0, 0.8)", "font-size": "0.8em;" }
+		                style: { "color": "rgba(200, 0, 0, 0.8)", "font-size": "0.8em" }
 		            },
 		            colors: ["rgba(200, 0, 0, 1)"],
 		            xAxis: 
@@ -137,22 +134,32 @@
 				    colorAxis: 
 				    {
 				        min: 0,
-				        minColor: '#FFFFFF',
-				        maxColor: Highcharts.getOptions().colors[0]
+				        minColor: "rgba(255, 255, 255, 1)",
+				        maxColor: "rgba(200, 0, 0, 1)"
 				    },
+				    tooltip: 
+				    {
+				        formatter: function () 
+				        {
+				        	if (this.point.value == null) return this.point.series['xAxis'].categories[this.point.x] + " was not part of the club during the " + this.point.series['yAxis'].categories[this.point.y] + " season.";
+
+				            return this.point.series['xAxis'].categories[this.point.x] + " " + (stat == "appearances" ? "made" : "scored") + " " + this.point.value + " " + stat + " in the " + this.point.series['yAxis'].categories[this.point.y] + " season.";
+				        }
+				    },				    
 				    series: 
 				    [
 				    	{
-				        name: 'Sales per employee',
-				        borderWidth: 1,
-				        data: heatmap_values,
-				        dataLabels: 
+					        name: "",
+					        borderWidth: 1,
+					        data: heatmap_values,
+					        nullColor: "rgba(0, 0, 0, 1)",
+					        dataLabels: 
 				        	{
-				            enabled: true,
-				            color: '#000000'
+				            	enabled: true,
+				            	color: "rgba(255, 255, 0, 1)"
 				        	}
 				    	}
-				    ],
+				    ]
 		    	});
 		    }
 
